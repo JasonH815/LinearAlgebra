@@ -51,7 +51,8 @@ class VectorSpec extends FlatSpec with Matchers {
   }
 
   it should "correctly perform scalar multiplication" in {
-    assert(Vector(1, 2, 3).scalarMultiply(-2) == Vector(-2, -4, -6))
+    assert(-2 * Vector(1, 2, 3) == Vector(-2, -4, -6))
+    assert(Vector(1, 2, 3) * -2 == Vector(-2, -4, -6))
   }
 
 }
