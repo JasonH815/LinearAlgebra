@@ -9,7 +9,7 @@ class Vector(val coordinates:Seq[Double]) {
 
   if (coordinates.isEmpty) throw new InstantiationException("The coordinates must be nonempty")
 
-  val dimension = this.coordinates.length
+  val dimension:Int = this.coordinates.length
 
   override def toString: String = "Vector: " + coordinates.mkString("(", ", ", ")")
 
@@ -40,6 +40,16 @@ class Vector(val coordinates:Seq[Double]) {
 
   /** multiply elements of a vector by a scalar */
   def *(scalar:Double):Vector = this.scalarMultiply(scalar)
+
+  /** returns the magnitude of the vector */
+  lazy val magnitude:Double = math.sqrt(this.coordinates.map(c => math.pow(c, 2)).sum)
+
+  /** returns a unit vector of the current vector which points in the same direction with magnitude 1 */
+  lazy val unitVector = {
+    if(magnitude == 0) throw new ArithmeticException("The zero vector has no unit vector")
+
+    1/this.magnitude * this
+  }
 }
 
 
