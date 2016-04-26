@@ -1,4 +1,4 @@
-package com.jason.linearalgebra
+package jasonh815.linearalgebra
 
 import scala.language.implicitConversions
 

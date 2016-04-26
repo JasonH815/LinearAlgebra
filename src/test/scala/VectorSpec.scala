@@ -1,5 +1,5 @@
+import jasonh815.linearalgebra.Vector
 import org.scalatest._
-import com.jason.linearalgebra.Vector
 
 /**
   * Created by Jason on 4/25/2016.
