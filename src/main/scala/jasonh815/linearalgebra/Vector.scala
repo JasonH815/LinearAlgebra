@@ -45,7 +45,7 @@ class Vector(val coordinates:Seq[Double]) {
   lazy val magnitude:Double = math.sqrt(this.coordinates.map(c => math.pow(c, 2)).sum)
 
   /** returns a unit vector of the current vector which points in the same direction with magnitude 1 */
-  lazy val unitVector = {
+  lazy val unitVector:Vector = {
     if(magnitude == 0) throw new ArithmeticException("The zero vector has no unit vector")
 
     1/this.magnitude * this
