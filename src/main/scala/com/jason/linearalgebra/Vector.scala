@@ -1,5 +1,7 @@
 package com.jason.linearalgebra
 
+import scala.language.implicitConversions
+
 class Vector(val coordinates:Seq[Double]) {
 
   if (coordinates.isEmpty) throw new InstantiationException("The coordinates must be nonempty")
