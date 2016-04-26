@@ -28,6 +28,8 @@ class Vector(val coordinates:Seq[Double]) {
   def -(other:Vector):Vector = this.minus(other)
 
   def scalarMultiply(scalar:Double):Vector = Vector(this.coordinates.map( a => a * scalar))
+
+  def *(scalar:Double):Vector = this.scalarMultiply(scalar)
 }
 
 
@@ -40,6 +42,8 @@ object Vector {
   implicit def is(seq:Seq[Int]):IntSequence = IntSequence(seq)
   implicit def dv(seq:Seq[Double]):Vector = Vector(seq)
   implicit def iv(seq:Seq[Int]):Vector = Vector(seq)
+  implicit def int2ScalarDouble(int: Int):ScalarDouble = new ScalarDouble(int.toDouble)
+  implicit def double2ScalarDouble(double:Double):ScalarDouble = new ScalarDouble(double)
 
 
   def apply(x: Double*) = new Vector(x)
