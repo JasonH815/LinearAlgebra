@@ -32,7 +32,7 @@ class VectorSpec extends FlatSpec with Matchers {
     }
   }
 
-  it should "add two vectors" in {
+  it should "add itself with another vector" in {
     assert(Vector(1, 2, 3) + Vector(4, 5, 6) == Vector(5, 7, 9))
     assert(Vector(1, 2, 3) + Seq(4, 5, 6) == Vector(5, 7, 9))
   }
@@ -43,7 +43,7 @@ class VectorSpec extends FlatSpec with Matchers {
     }
   }
 
-  it should "subtract two vectors" in {
+  it should "subtract another vector from itself" in {
     assert(Vector(1, 2, 3) - Vector(4, 5, 6) == Vector(-3, -3, -3))
     assert(Vector(1, 2, 3) - Seq(4, 5, 6) == Vector(-3, -3, -3))
   }
@@ -68,6 +68,27 @@ class VectorSpec extends FlatSpec with Matchers {
     intercept[ArithmeticException] {
       Vector(0, 0, 0).unitVector
     }
+  }
+
+  it should "check the dimensions for performing a dot product" in {
+    intercept[IllegalArgumentException] {
+      Vector(1, 2, 3) dot Vector(4, 5)
+    }
+  }
+
+  it should "check the dimensions for calculating the angle between two vectors" in {
+    intercept[IllegalArgumentException] {
+      Vector(1, 2, 3) angleDegreesWith Vector(4, 5)
+    }
+  }
+
+  it should "calculate it's dot product with another vector" in {
+    assert((Vector(1, 2, 3) dot Vector(4, 5, 6)) == 32)
+  }
+
+  it should "calculate the angle between itself and another vector" in {
+    assert(((Vector(1, 2, 3) angleRadiansWith Vector(4, 5, 6))*1e8).toInt == 22572612)
+    assert(((Vector(1, 2, 3) angleDegreesWith  Vector(4, 5, 6))*1e6).toInt == 12933154)
   }
 
 }

@@ -50,8 +50,16 @@ class Vector(val coordinates:Seq[Double]) {
 
     1/this.magnitude * this
   }
-}
+  /** returns the dot product of two vectors */
+  def dot(other:Vector):Double = this.zipCoords(other).map(pair => pair._1 * pair._2).sum
 
+  /** returns the angle in radians between two vectors */
+  def angleRadiansWith(other: Vector):Double = math.acos(dot(other)/(this.magnitude * other.magnitude))
+
+  /** returns the angle in degrees between two vectors */
+  def angleDegreesWith(other: Vector):Double = angleRadiansWith(other).toDegrees
+
+}
 
 object Vector {
 
