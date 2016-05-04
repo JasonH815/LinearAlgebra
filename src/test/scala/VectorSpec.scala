@@ -91,4 +91,19 @@ class VectorSpec extends FlatSpec with Matchers {
     assert(((Vector(1, 2, 3) angleDegreesWith  Vector(4, 5, 6))*1e6).toInt == 12933154)
   }
 
+  it should "throw an exception when trying to calculate an angle with the zero vector" in {
+    intercept[ArithmeticException] {
+      Vector(0, 0, 0) angleRadiansWith Vector(4, 5, 6)
+    }
+  }
+
+  it should "not return a NaN due to floating point rounder errors when calculating an angle with another vector" in {
+    val coords = Seq[Double](0.70710678118654752440084436210485, 0.70710678118654752440084436210485)
+    assert(!(Vector(coords) angleRadiansWith Vector(coords)).isNaN)
+
+    val coords2 = Seq[Double](10.01, 10)
+    val coords3 = Seq[Double](-10.01, -10)
+    assert(!(Vector(coords2) angleRadiansWith Vector(coords3)).isNaN)
+  }
+
 }
