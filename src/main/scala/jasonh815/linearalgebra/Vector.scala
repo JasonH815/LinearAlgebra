@@ -7,6 +7,8 @@ import scala.language.implicitConversions
   */
 class Vector(val coordinates:Seq[Double]) {
 
+  import jasonh815.linearalgebra.Vector.DoubleApproximations
+
   if (coordinates.isEmpty) throw new InstantiationException("The coordinates must be nonempty")
 
   val dimension:Int = this.coordinates.length
@@ -46,7 +48,7 @@ class Vector(val coordinates:Seq[Double]) {
 
   /** returns a unit vector of the current vector which points in the same direction with magnitude 1 */
   lazy val unitVector:Vector = {
-    if(magnitude == 0) throw new ArithmeticException("The zero vector has no unit vector")
+    if(magnitude ~= 0) throw new ArithmeticException("The zero vector has no unit vector")
 
     1/this.magnitude * this
   }
@@ -56,7 +58,7 @@ class Vector(val coordinates:Seq[Double]) {
   /** returns the angle in radians between two vectors */
   def angleRadiansWith(other: Vector):Double = {
     //check for zero vector
-    if (magnitude == 0 || other.magnitude == 0)
+    if (magnitude.~=(0) || other.magnitude.~=(0))
       throw new ArithmeticException("Cannot compute and angle with the zero vector")
 
     var ratioResult = dot(other)/(magnitude * other.magnitude)
@@ -70,9 +72,41 @@ class Vector(val coordinates:Seq[Double]) {
   /** returns the angle in degrees between two vectors */
   def angleDegreesWith(other: Vector):Double = angleRadiansWith(other).toDegrees
 
+  /**
+    * returns true if two vectors are parallel
+    */
+  def parallelWith(other:Vector):Boolean = {
+    if (magnitude.~=(0) || other.magnitude.~=(0)) return true
+    val angle = angleRadiansWith(other)
+    if(angle ~= 0) true
+    else if (angle ~= math.Pi) true
+    else false
+  }
+
+  /**
+    * returns true if two vectors or orthogonal(perpendicular)
+    */
+  def orthogonalWith(other:Vector):Boolean = {
+
+    val dotProduct = dot(other)
+    if (dotProduct ~= 0) true else false
+  }
+
 }
 
 object Vector {
+
+  /**
+    * Class for double helper methods
+    */
+  implicit class DoubleApproximations(val d:Double) {
+    /**
+      * Approximately equal
+      */
+    def ~=(other:Double, tolerance:Double = 1e-11):Boolean = {
+      if (d - other < tolerance && d - other > tolerance * -1) true else false
+    }
+  }
 
   // wrapper for int and double sequences to handle type erasure and allow for overloading apply methods below
   case class DoubleSequence(seq:Seq[Double])

@@ -106,4 +106,24 @@ class VectorSpec extends FlatSpec with Matchers {
     assert(!(Vector(coords2) angleRadiansWith Vector(coords3)).isNaN)
   }
 
+  it should "check if it is parallel with another vector" in {
+    val vector = Vector(1, 2, 3)
+    assert(vector parallelWith vector * 0.5)
+    assert(vector parallelWith vector * -2.5)
+    assert(vector parallelWith vector.unitVector)
+    assert(vector parallelWith Vector(0, 0, 0))
+    assert(!(vector parallelWith Vector(5, 4, -7)))
+  }
+
+  it should "check if it is orthogonal with another vector" in {
+    val vector = Vector(1, 0)
+    assert(vector orthogonalWith Vector(0, 7))
+    assert(vector orthogonalWith Vector(0, -1))
+    assert(vector orthogonalWith Vector(0, 0))
+    assert(!(vector orthogonalWith vector.unitVector))
+    val v = Vector(-2.328, -7.284, -1.214)
+    val x = Vector(-1.821, 1.072, -2.94)
+    assert(v orthogonalWith x)
+  }
+
 }
